@@ -1,13 +1,8 @@
 from PIL import Image
 import numpy as np
 import os
-
-
-# ==========================================
-# BARRA DE PROGRESO VISUAL
-# ==========================================
-
 from .progress import barra_progreso
+
 
 def extraer_archivo(imagen, salida="output"):
 
@@ -16,17 +11,35 @@ def extraer_archivo(imagen, salida="output"):
         img = Image.open(imagen).convert("RGB")
         pixeles = np.array(img)
 
+        alto = pixeles.shape[0]
+        ancho = pixeles.shape[1]
+
+        total_pixeles = alto * ancho
+        procesados = 0
+
+        print("\nIniciando extracción del archivo oculto...\n")
+
         bits = ""
 
-        for fila in pixeles:
-            for pixel in fila:
+        for y in range(alto):
+            for x in range(ancho):
+
+                pixel = pixeles[y][x]
+
                 for color in pixel:
                     bits += str(color & 1)
+
+                procesados += 1
+                barra_progreso(procesados, total_pixeles)
+
+        print("\n")
 
         datos = bytearray()
 
         for i in range(0, len(bits), 8):
+
             byte = bits[i:i+8]
+
             if len(byte) == 8:
                 datos.append(int(byte, 2))
 
