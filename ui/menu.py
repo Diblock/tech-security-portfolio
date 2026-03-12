@@ -3,11 +3,24 @@ import tkinter as tk
 from tkinter import filedialog
 import os
 from PIL import Image
+
 from core.encoder import ocultar_mensaje, texto_a_binario
 from core.decoder import extraer_mensaje
 from core.file_encoder import ocultar_archivo_en_imagen
 from core.file_decoder import extraer_archivo
 
+# UI CENTRAL
+from .ui_central import (
+    pausa,
+    limpiar,
+    mostrar_banner,
+    menu_visual
+)
+
+
+# ==========================================
+# SELECTOR DE IMAGEN
+# ==========================================
 
 def seleccionar_imagen():
 
@@ -25,6 +38,10 @@ def seleccionar_imagen():
     return ruta
 
 
+# ==========================================
+# SELECTOR DE ARCHIVO
+# ==========================================
+
 def seleccionar_archivo():
 
     ventana = tk.Tk()
@@ -37,6 +54,10 @@ def seleccionar_archivo():
 
     return ruta
 
+
+# ==========================================
+# SELECTOR DE CARPETA DESTINO
+# ==========================================
 
 def seleccionar_guardado():
 
@@ -51,54 +72,21 @@ def seleccionar_guardado():
 
 
 # ==========================================
-# BANNER HACKER
+# MENÚ PRINCIPAL
 # ==========================================
 
-def mostrar_banner():
-
-    print("""
-██████╗ ██╗██████╗ ██╗      ██████╗  ██████╗██╗  ██╗
-██╔══██╗██║██╔══██╗██║     ██╔═══██╗██╔════╝██║ ██╔╝
-██║  ██║██║██████╔╝██║     ██║   ██║██║     █████╔╝
-██║  ██║██║██╔══██╗██║     ██║   ██║██║     ██╔═██╗
-██████╔╝██║██████╔╝███████╗╚██████╔╝╚██████╗██║  ██╗
-╚═════╝ ╚═╝╚═════╝ ╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝
-""")
-
-    print("⚠ IMPORTANTE:")
-    print("Esta herramienta funciona únicamente con imágenes PNG.")
-    print("Las imágenes JPG/JPEG comprimen los píxeles y destruyen los datos ocultos.\n")
-
-    print("============================================")
-    print("    LSB STEGANOGRAPHY PAYLOAD INJECTOR")
-    print("============================================\n")
-
-
 def menu():
-
-    mostrar_banner()
 
     imagen_cargada = None
     texto_secreto = None
 
     while True:
 
-        print("\n===================================")
-        print("     HERRAMIENTA DE ESTEGANOGRAFIA")
-        print("===================================")
+        limpiar()
+        mostrar_banner()
+        menu_visual(imagen_cargada, texto_secreto)
 
-        print(f"Imagen cargada : {imagen_cargada if imagen_cargada else 'NINGUNA'}")
-        print(f"Mensaje cargado: {'SI' if texto_secreto else 'NO'}")
-
-        print("\n1. Cargar imagen")
-        print("2. Escribir mensaje secreto")
-        print("3. Ocultar mensaje")
-        print("4. Extraer mensaje")
-        print("5. Ocultar archivo en imagen")
-        print("6. Extraer archivo de imagen")
-        print("7. Salir")
-
-        opcion = input("\nSelecciona opción: ")
+        opcion = input("\nSelecciona opción → ")
 
         # ============================
         # CARGAR IMAGEN
@@ -132,9 +120,12 @@ def menu():
                 print(f"Resolución: {ancho} x {alto}")
                 print(f"Capacidad máxima: {capacidad_bytes/1024/1024:.2f} MB\n")
 
+                pausa()
+
             except Exception as e:
 
                 print("❌ Error al cargar imagen:", e)
+                pausa()
 
         # ============================
         # ESCRIBIR MENSAJE
@@ -152,10 +143,12 @@ def menu():
                 texto_secreto = texto
 
                 print("✅ Mensaje almacenado correctamente")
+                pausa()
 
             except Exception as e:
 
                 print("❌ Error:", e)
+                pausa()
 
         # ============================
         # OCULTAR MENSAJE
@@ -166,28 +159,33 @@ def menu():
             try:
 
                 if imagen_cargada is None:
-                    raise Exception("No hay imagen cargada")
+                    raise Exception("Primero debes cargar una imagen")
 
                 if texto_secreto is None:
-                    raise Exception("No hay mensaje cargado")
+                    raise Exception("Primero debes escribir un mensaje")
 
                 confirmacion = input("¿Seguro que deseas ocultar el mensaje? (s/n): ")
 
-                if confirmacion.lower() != "s":
+                if confirmacion.strip().lower() != "s":
                     print("Operación cancelada")
+                    pausa()
                     continue
 
-                    binario = texto_a_binario(texto_secreto)
+                binario = texto_a_binario(texto_secreto)
+
                 resultado = ocultar_mensaje(imagen_cargada, binario)
 
                 if resultado:
-                    print("✅ Proceso completado")
+                    print("✅ Mensaje ocultado correctamente")
                 else:
-                    print("❌ El proceso no se completó")
+                    print("❌ No se pudo ocultar el mensaje")
+
+                pausa()
 
             except Exception as e:
 
                 print("❌ Error durante el proceso:", e)
+                pausa()
 
         # ============================
         # EXTRAER MENSAJE
@@ -196,6 +194,7 @@ def menu():
         elif opcion == "4":
 
             ejecutar_extraccion()
+            pausa()
 
         # ============================
         # OCULTAR ARCHIVO
@@ -217,6 +216,7 @@ def menu():
 
                 if confirmacion.lower() != "s":
                     print("Operación cancelada")
+                    pausa()
                     continue
 
                 resultado = ocultar_archivo_en_imagen(imagen_cargada, archivo)
@@ -226,9 +226,12 @@ def menu():
                 else:
                     print("❌ No se pudo ocultar el archivo")
 
+                pausa()
+
             except Exception as e:
 
                 print("❌ Error al ocultar archivo:", e)
+                pausa()
 
         # ============================
         # EXTRAER ARCHIVO
@@ -249,10 +252,12 @@ def menu():
                     raise Exception("No se seleccionó carpeta destino")
 
                 extraer_archivo(imagen, carpeta)
+                pausa()
 
             except Exception as e:
 
                 print("❌ Error al extraer archivo:", e)
+                pausa()
 
         # ============================
         # SALIR
@@ -266,3 +271,4 @@ def menu():
         else:
 
             print("❌ Opción inválida")
+            pausa()
