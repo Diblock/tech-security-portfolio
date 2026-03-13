@@ -116,8 +116,8 @@ def mostrar_banner():
 """
     print(Fore.GREEN + Style.BRIGHT + ascii_art)
     
-    print(Fore.RED + Style.BRIGHT + "   [⚠] IMPORTANTE:")
-    print(Fore.YELLOW + "   Esta herramienta funciona únicamente con imágenes " + Fore.WHITE + Style.BRIGHT + "PNG.")
+    print(Fore.RED + Style.BRIGHT + "   [⚠ ] IMPORTANTE:")
+    print(Fore.YELLOW + "   Esta herramienta funciona únicamente con imágenes " + Fore.WHITE + Style.BRIGHT + "PNG." + " " + "y" + " " + Fore.WHITE + Style.BRIGHT + "archivos.")
     print(Fore.YELLOW + "   Las imágenes JPG/JPEG comprimen los píxeles y destruyen los datos ocultos.\n")
 
 
@@ -136,12 +136,12 @@ def estado(imagen, mensaje):
     if imagen:
         print(Fore.LIGHTGREEN_EX + f"   [✔] Imagen cargada  : {Fore.WHITE}{imagen}")
     else:
-        print(Fore.LIGHTRED_EX + "   [✖] Imagen cargada  : " + Fore.LIGHTBLACK_EX + "NINGUNA")
+        print(Fore.LIGHTRED_EX + "   [✖ ] Imagen cargada  : " + Fore.LIGHTBLACK_EX + "NINGUNA")
 
     if mensaje:
         print(Fore.LIGHTGREEN_EX + "   [✔] Mensaje cargado : " + Fore.WHITE + "SÍ")
     else:
-        print(Fore.LIGHTRED_EX + "   [✖] Mensaje cargado : " + Fore.LIGHTBLACK_EX + "NO")
+        print(Fore.LIGHTRED_EX + "   [✖ ] Mensaje cargado : " + Fore.LIGHTBLACK_EX + "NO")
     print()
 
 # ==============================================
