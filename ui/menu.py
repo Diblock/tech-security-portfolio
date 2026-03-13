@@ -13,8 +13,10 @@ from core.file_decoder import extraer_archivo
 from .ui_central import (
     pausa,
     limpiar,
+    banner,
+    boot_stegocore,
     mostrar_banner,
-    menu_visual
+    menu_visual,
 )
 
 
@@ -80,10 +82,13 @@ def menu():
     imagen_cargada = None
     texto_secreto = None
 
+    limpiar()
+    banner()
+    boot_stegocore()
+    mostrar_banner()    
+
     while True:
 
-        limpiar()
-        mostrar_banner()
         menu_visual(imagen_cargada, texto_secreto)
 
         opcion = input("\nSelecciona opción → ")
