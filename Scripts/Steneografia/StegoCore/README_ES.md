@@ -122,9 +122,16 @@ Por esta razón la herramienta utiliza **PNG**.
 
 ## 1️⃣ Clonar el repositorio
 
-git clone https://github.com/your-repo/steganography-tool.git
+git clone https://github.com/Diblock/tech-security-portfolio.git
+cd tech-security-portfolio/Scripts/Steneografia/StegoCore
 
-cd steganography-tool
+2️⃣ Instalar dependencias
+
+pip install -r requirements.txt
+
+3️⃣ Ejecutar la herramienta
+
+python main.py
 
 ---
 
