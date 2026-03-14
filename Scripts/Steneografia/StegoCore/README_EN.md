@@ -121,10 +121,16 @@ For this reason the tool uses **PNG images**.
 
 ## Clone repository
 
-git clone https://github.com/your-repo/steganography-tool.git
+git clone https://github.com/Diblock/tech-security-portfolio.git
+cd tech-security-portfolio/Scripts/Steneografia/StegoCore
 
-cd steganography-tool
+2️⃣ Install dependencies
 
+pip install -r requirements.txt
+
+3️⃣ Run the tool
+
+python main.py
 ---
 
 ## Create virtual environment
